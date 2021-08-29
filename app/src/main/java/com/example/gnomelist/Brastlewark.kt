@@ -13,7 +13,7 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 data class Brastlewark (
 	val id : Int,
 	val name : String,
-	val thumbnail : String,
+	val thumbnail : String = "https://i.imgur.com/tGbaZCY.jpg",
 	val age : Int,
 	val weight : Double,
 	val height : Double,

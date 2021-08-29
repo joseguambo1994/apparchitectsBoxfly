@@ -1,8 +1,11 @@
 package com.example.gnomelist
 import Brastlewark
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.squareup.picasso.Picasso
@@ -25,7 +28,7 @@ class GnomeAdapter( val gnomes: List<Brastlewark>): RecyclerView.Adapter<GnomeAd
         return gnomes.size
     }
 
-    class GnomeHolder(val view:View): RecyclerView.ViewHolder(view){
+    inner class GnomeHolder(val view:View): RecyclerView.ViewHolder(view){
 
         fun  render(brastlewark: Brastlewark){
             view.tvGnome.text = brastlewark.name
@@ -35,8 +38,23 @@ class GnomeAdapter( val gnomes: List<Brastlewark>): RecyclerView.Adapter<GnomeAd
                 .load(brastlewark.thumbnail)
                 .into(view.ivGnome)
 
+        }
+
+        init {
+            view.setOnClickListener { v:View ->
+                val position:Int = absoluteAdapterPosition
+                Toast.makeText(view.context,"You clicked on position ${position + 1}",
+                Toast.LENGTH_SHORT).show()
+
+                val intent = Intent(v.context, MainActivity2::class.java)
+                v.context.startActivity(intent)
+
+            }
+
 
         }
+
+
     }
 
 
