@@ -56,11 +56,9 @@ class MainActivity : AppCompatActivity() {
 
     fun getUsers() {
         val queue = Volley.newRequestQueue(this)
-        val url: String = "https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json"
+        val url = "https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json"
 
-        val  urlTest: String ="https://jsonplaceholder.typicode.com/posts/1"
-
-        val stringReq = StringRequest(Request.Method.GET, "https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json",
+        val stringReq = StringRequest(Request.Method.GET, url,
             Response.Listener<String> { response ->
 
                 val jsonObject = JSONObject(response)
@@ -84,6 +82,7 @@ class MainActivity : AppCompatActivity() {
                     var oneBrastlewarkFromListOfArrayToJson = gson.fromJson(
                         oneBrastlewarkFromListOfArray, Brastlewark::class.java
                     )
+                    oneBrastlewarkFromListOfArrayToJson.thumbnail = "http://i.imgur.com/DvpvklR.png";
                     listOfBrastlewark.add(oneBrastlewarkFromListOfArrayToJson)
                 }
 
