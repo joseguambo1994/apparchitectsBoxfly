@@ -23,7 +23,6 @@ class GnomeAdapter( val gnomes: List<Brastlewark>): RecyclerView.Adapter<GnomeAd
     }
 
     override fun onBindViewHolder(holder: GnomeHolder, position: Int) {
-       // currentBrastlewark = gnomes[position]
         holder.render(gnomes[position])
     }
 
@@ -33,18 +32,13 @@ class GnomeAdapter( val gnomes: List<Brastlewark>): RecyclerView.Adapter<GnomeAd
 
     inner class GnomeHolder(val view:View): RecyclerView.ViewHolder(view){
 
-
-
-
-
-        fun  render(brastlewark: Brastlewark){
+        fun  render(brastlewark: Brastlewark) {
             view.tvGnome.text = brastlewark.name
 //            Picasso.get().load(gnome.imageUrl)
 //                .resize(100,100).into(view.ivGnome)
             Glide.with(view)
                 .load(brastlewark.thumbnail)
                 .into(view.ivGnome)
-
         }
 
         init {
@@ -53,27 +47,12 @@ class GnomeAdapter( val gnomes: List<Brastlewark>): RecyclerView.Adapter<GnomeAd
                 Toast.makeText(view.context,"You clicked on position ${position + 1}",
                 Toast.LENGTH_SHORT).show()
 
-                var listOfProfessions = emptyArray<String>()
-//                for (i in 0..currentBrastlewark.professions.size - 1) {
-//
-//
-//                    listOfProfessions[i] = currentBrastlewark.professions.get(i)
-//                }
-
-
                 val intent = Intent(v.context, MainActivity2::class.java)
-                intent.putExtra("selectedBrastewarkName",gnomes.get(position).name);
-                intent.putExtra("selectedBrastewarkThumbnail",gnomes.get(position).thumbnail);
-                intent.putStringArrayListExtra("selectedBrastewarkProfessions", ArrayList(gnomes.get(position).professions) );
+                intent.putExtra("selectedBrastlewarkName",gnomes.get(position).name);
+                intent.putExtra("selectedBrastlewarkThumbnail",gnomes.get(position).thumbnail);
+                intent.putStringArrayListExtra("selectedBrastlewarkProfessions", ArrayList(gnomes.get(position).professions) );
                 v.context.startActivity(intent)
-
             }
-
-
         }
-
-
     }
-
-
 }

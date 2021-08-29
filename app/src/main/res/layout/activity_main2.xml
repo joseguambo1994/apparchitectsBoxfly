@@ -8,26 +8,27 @@
 
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tvName"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:textSize="35dp"
         android:text="TextView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/ivThumbnail"
+        tools:layout_editor_absoluteX="-53dp" />
 
     <ImageView
-        android:id="@+id/ivThumbail"
+        android:id="@+id/ivThumbnail"
         android:layout_width="200dp"
         android:layout_height="200dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView1" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvProfessions"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivThumbail"
-        tools:layout_editor_absoluteX="-52dp" />
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
