@@ -11,9 +11,22 @@ import com.bumptech.glide.Glide
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_gnome.*
 import kotlinx.android.synthetic.main.item_gnome.view.*
+import java.util.*
 import kotlin.coroutines.coroutineContext
 
 class GnomeAdapter( val gnomes: List<Brastlewark>): RecyclerView.Adapter<GnomeAdapter.GnomeHolder>(){
+
+    var arrayOfString = arrayOf("")
+    var listOfString = arrayOfString.toList()
+    var currentBrastlewark = Brastlewark(id=0,
+     name ="",
+     thumbnail = "",
+     age = 200,
+     weight = 1.0,
+     height = 2.0,
+     hair_color = "",
+    professions = listOfString ,
+    friends = listOfString);
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GnomeHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -21,6 +34,7 @@ class GnomeAdapter( val gnomes: List<Brastlewark>): RecyclerView.Adapter<GnomeAd
     }
 
     override fun onBindViewHolder(holder: GnomeHolder, position: Int) {
+        currentBrastlewark = gnomes[position]
         holder.render(gnomes[position])
     }
 
@@ -29,6 +43,7 @@ class GnomeAdapter( val gnomes: List<Brastlewark>): RecyclerView.Adapter<GnomeAd
     }
 
     inner class GnomeHolder(val view:View): RecyclerView.ViewHolder(view){
+
 
         fun  render(brastlewark: Brastlewark){
             view.tvGnome.text = brastlewark.name
@@ -46,7 +61,18 @@ class GnomeAdapter( val gnomes: List<Brastlewark>): RecyclerView.Adapter<GnomeAd
                 Toast.makeText(view.context,"You clicked on position ${position + 1}",
                 Toast.LENGTH_SHORT).show()
 
+                var listOfProfessions = emptyArray<String>()
+                for (i in 0..currentBrastlewark.professions.size - 1) {
+
+
+                    listOfProfessions[i] = currentBrastlewark.professions.get(i)
+                }
+
+
+
                 val intent = Intent(v.context, MainActivity2::class.java)
+                intent.putExtra("currentBrastlewark",currentBrastlewark.name);
+                intent.putExtra("currentBrastlewarkProfessions",listOfProfessions);
                 v.context.startActivity(intent)
 
             }
