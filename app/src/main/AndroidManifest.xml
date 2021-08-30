@@ -12,10 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GnomeList">
         <activity
-            android:name=".MainActivity2"
+            android:name=".GnomeDetailActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".GnomeListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

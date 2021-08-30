@@ -1,25 +1,19 @@
 package com.example.gnomelist
-import Brastlewark
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_gnome.*
 import kotlinx.android.synthetic.main.item_gnome.view.*
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.coroutines.coroutineContext
 
-class GnomeAdapter( val gnomes: List<Brastlewark>): RecyclerView.Adapter<GnomeAdapter.GnomeHolder>(), Filterable {
+class GnomeAdapter( val gnomes: List<Gnome>): RecyclerView.Adapter<GnomeAdapter.GnomeHolder>(), Filterable {
 
-    var gnomesFiltered : MutableList<Brastlewark> = ArrayList()
+    var gnomesFiltered : MutableList<Gnome> = ArrayList()
 
     init {
         gnomesFiltered = gnomes.toMutableList()
@@ -40,12 +34,13 @@ class GnomeAdapter( val gnomes: List<Brastlewark>): RecyclerView.Adapter<GnomeAd
 
     inner class GnomeHolder(val view:View): RecyclerView.ViewHolder(view){
 
-        fun  render(brastlewark: Brastlewark) {
-            view.tvGnome.text = brastlewark.name
-//            Picasso.get().load(gnome.imageUrl)
-//                .resize(100,100).into(view.ivGnome)
+        fun  render(gnome: Gnome) {
+            view.tvGnome.text = gnome.name
+            // Another tested image load library
+            // Picasso.get().load(gnome.imageUrl)
+            // .resize(100,100).into(view.ivGnome)
             Glide.with(view)
-                .load(brastlewark.thumbnail)
+                .load(gnome.thumbnail)
                 .override(100, 100)
                 .into(view.ivGnome)
         }
@@ -53,13 +48,11 @@ class GnomeAdapter( val gnomes: List<Brastlewark>): RecyclerView.Adapter<GnomeAd
         init {
             view.setOnClickListener { v:View ->
                 val position:Int = absoluteAdapterPosition
-                Toast.makeText(view.context,"You clicked on position ${position + 1}",
-                Toast.LENGTH_SHORT).show()
 
-                val intent = Intent(v.context, MainActivity2::class.java)
-                intent.putExtra("selectedBrastlewarkName",gnomesFiltered.get(position).name);
-                intent.putExtra("selectedBrastlewarkThumbnail",gnomesFiltered.get(position).thumbnail);
-                intent.putStringArrayListExtra("selectedBrastlewarkProfessions", ArrayList(gnomesFiltered.get(position).professions) );
+                val intent = Intent(v.context, GnomeDetailActivity::class.java)
+                intent.putExtra("selectedGnomeName",gnomesFiltered.get(position).name);
+                intent.putExtra("selectedGnomeThumbnail",gnomesFiltered.get(position).thumbnail);
+                intent.putStringArrayListExtra("selectedGnomeProfessions", ArrayList(gnomesFiltered.get(position).professions) );
                 v.context.startActivity(intent)
             }
         }
@@ -69,19 +62,16 @@ class GnomeAdapter( val gnomes: List<Brastlewark>): RecyclerView.Adapter<GnomeAd
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val charSearch = constraint.toString()
-                if (charSearch.isEmpty()) {
-                    gnomesFiltered = gnomes.toMutableList()
+                gnomesFiltered = if (charSearch.isEmpty()) {
+                    gnomes.toMutableList()
                 } else {
-                    var resultList : MutableList<Brastlewark> = ArrayList();
+                    var resultList : MutableList<Gnome> = ArrayList();
                     for (row in gnomes) {
                         if(row.name.lowercase(Locale.ROOT).contains(charSearch.lowercase(Locale.ROOT))){
                             resultList.add(row)
                         }
-                        println("row.name.toString()" + row.name)
                     }
-                    gnomesFiltered = resultList
-                    println("gnomesFiltered.size" + gnomesFiltered.size)
-
+                    resultList
                 }
                 val filterResults = FilterResults()
                 filterResults.values = gnomesFiltered
@@ -90,7 +80,7 @@ class GnomeAdapter( val gnomes: List<Brastlewark>): RecyclerView.Adapter<GnomeAd
 
             @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                gnomesFiltered = results?.values as MutableList<Brastlewark>
+                gnomesFiltered = results?.values as MutableList<Gnome>
                 notifyDataSetChanged()
             }
 

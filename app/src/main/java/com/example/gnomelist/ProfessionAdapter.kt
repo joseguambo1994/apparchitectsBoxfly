@@ -6,9 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_profession.view.*
 
-class ProfessionAdapter(val professions: ArrayList<String>): RecyclerView.Adapter<ProfessionAdapter.ProfessionHolder>() {
-
-
+class ProfessionAdapter(private val professions: ArrayList<String>): RecyclerView.Adapter<ProfessionAdapter.ProfessionHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfessionHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -23,7 +21,7 @@ class ProfessionAdapter(val professions: ArrayList<String>): RecyclerView.Adapte
         return professions.size
     }
 
-    inner class ProfessionHolder(val view: View): RecyclerView.ViewHolder(view){
+    inner class ProfessionHolder(private val view: View): RecyclerView.ViewHolder(view){
         fun render(professionName:String){
             view.tvProfession.text= professionName
         }

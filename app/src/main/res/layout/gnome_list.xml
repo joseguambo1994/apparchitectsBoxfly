@@ -5,19 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".GnomeListActivity">
 
     <SearchView
-        android:id="@+id/svBrastlewark"
+        android:id="@+id/svGnome"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:queryHint="Buscar por nombre"/>
 
-    
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSuperHero"
+        android:id="@+id/rvGnomes"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>
