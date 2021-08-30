@@ -25,7 +25,6 @@ class ProfessionAdapter(val professions: ArrayList<String>): RecyclerView.Adapte
 
     inner class ProfessionHolder(val view: View): RecyclerView.ViewHolder(view){
         fun render(professionName:String){
-            println("professionName "+professionName);
             view.tvProfession.text= professionName
         }
     }

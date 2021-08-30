@@ -46,6 +46,7 @@ class GnomeAdapter( val gnomes: List<Brastlewark>): RecyclerView.Adapter<GnomeAd
 //                .resize(100,100).into(view.ivGnome)
             Glide.with(view)
                 .load(brastlewark.thumbnail)
+                .override(100, 100)
                 .into(view.ivGnome)
         }
 
@@ -71,12 +72,8 @@ class GnomeAdapter( val gnomes: List<Brastlewark>): RecyclerView.Adapter<GnomeAd
                 if (charSearch.isEmpty()) {
                     gnomesFiltered = gnomes.toMutableList()
                 } else {
-                   // val resultList = ArrayList<String>()
                     var resultList : MutableList<Brastlewark> = ArrayList();
                     for (row in gnomes) {
-//                        if (row.lowercase(Locale.ROOT).contains(charSearch.lowercase(Locale.ROOT))) {
-//                            resultList.add(row)
-//                        }
                         if(row.name.lowercase(Locale.ROOT).contains(charSearch.lowercase(Locale.ROOT))){
                             resultList.add(row)
                         }

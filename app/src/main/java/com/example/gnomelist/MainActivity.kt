@@ -12,6 +12,7 @@ import java.util.*
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
+import kotlinx.android.synthetic.main.activity_main2.*
 import org.json.JSONObject
 import kotlin.collections.ArrayList
 import kotlin.random.Random
@@ -32,18 +33,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        getGnomes()
         setContentView(R.layout.activity_main)
 
-
-        getUsers()
         initRecycler()
-        println("listOfBrastlewark " +listOfBrastlewark)
-
-
-
-
-
-
+        println("listOfBrastlewark onCreateonCreate " +listOfBrastlewark)
 
         svBrastlewark.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -58,58 +52,46 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-
-
-
-
-
-
     }
 
     override fun onResume() {
         super.onResume()
         println("onResume listOfBrastlewark " +listOfBrastlewark)
-        getUsers()
+        getGnomes()
         initRecycler()
-
+        clearSearch()
     }
 
+    fun clearSearch(){
+
+        svBrastlewark.setQuery("", false);
+        svBrastlewark.clearFocus();
+    }
 
     fun initRecycler() {
         rvSuperHero.layoutManager = LinearLayoutManager(this)
      //   val gnomesList: List<Gnome> = gnomes.toList()
         println("list + " + listOfBrastlewark)
-        getUsers()
+        getGnomes()
         val adapter = GnomeAdapter(listOfBrastlewark.toList());
         rvSuperHero.adapter=adapter
     }
 
-    fun getUsers() {
-
-
-
+    fun getGnomes() {
         val queue = Volley.newRequestQueue(this)
         val url = "https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json"
 
         val stringReq = StringRequest(Request.Method.GET, url,
             { response ->
-
                 listOfBrastlewark.clear();
                 println("size after clear" + listOfBrastlewark.size);
                 val jsonObject = JSONObject(response)
                 val listOfArray = jsonObject.getJSONArray("Brastlewark")
-                println("length "+ listOfArray.length())
-
-                println("listOfArray[2] +" +listOfArray[2])
-
-                println("listOfArray" + listOfArray)
-
                 val oneBrastlewarkFromListOfArray = listOfArray[2].toString()
                 val gson = Gson()
                 var oneBrastlewarkFromListOfArrayToJson = gson.fromJson(
                     oneBrastlewarkFromListOfArray, Brastlewark::class.java
                 )
-                println("oneBrastlewarkFromListOfArrayToJson " + oneBrastlewarkFromListOfArrayToJson)
 
                 for (i in 1..(listOfArray.length()-1)) {
                     val oneBrastlewarkFromListOfArray = listOfArray[i].toString()
