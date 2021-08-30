@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         println("onResume listOfBrastlewark " +listOfBrastlewark)
+        getUsers()
         initRecycler()
 
     }
@@ -56,12 +57,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getUsers() {
+
+
+
         val queue = Volley.newRequestQueue(this)
         val url = "https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json"
 
         val stringReq = StringRequest(Request.Method.GET, url,
-            Response.Listener<String> { response ->
+            { response ->
 
+                listOfBrastlewark.clear();
+                println("size after clear" + listOfBrastlewark.size);
                 val jsonObject = JSONObject(response)
                 val listOfArray = jsonObject.getJSONArray("Brastlewark")
                 println("length "+ listOfArray.length())
@@ -83,8 +89,11 @@ class MainActivity : AppCompatActivity() {
                     var oneBrastlewarkFromListOfArrayToJson = gson.fromJson(
                         oneBrastlewarkFromListOfArray, Brastlewark::class.java
                     )
-                    oneBrastlewarkFromListOfArrayToJson.thumbnail = "http://i.imgur.com/DvpvklR.png";
-                    listOfBrastlewark.add(oneBrastlewarkFromListOfArrayToJson)
+                    if (oneBrastlewarkFromListOfArrayToJson.age in 150..220) {
+                        oneBrastlewarkFromListOfArrayToJson.thumbnail =
+                            "http://i.imgur.com/DvpvklR.png";
+                        listOfBrastlewark.add(oneBrastlewarkFromListOfArrayToJson)
+                    }
                 }
 
                 println("mutableList.size + "+listOfBrastlewark.size);
@@ -97,7 +106,7 @@ class MainActivity : AppCompatActivity() {
                 println(listOfBrastlewark.get(2))
 
             },
-            Response.ErrorListener { print("Can't download")})
+            { print("Can't download")})
         queue.add(stringReq)
     }
 
