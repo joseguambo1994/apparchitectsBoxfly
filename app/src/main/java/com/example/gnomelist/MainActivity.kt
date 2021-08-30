@@ -3,6 +3,7 @@ package com.example.gnomelist
 import Brastlewark
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
@@ -12,21 +13,22 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import org.json.JSONObject
+import kotlin.collections.ArrayList
+import kotlin.random.Random
+import kotlin.random.Random.Default.nextInt
 
 class MainActivity : AppCompatActivity() {
 
     val listOfBrastlewark = LinkedList<Brastlewark>()
-//    var gnomes = arrayOf(
-//        Gnome("name1","https://www.publicdomainpictures.net/pictures/10000/nahled/thinking-monkey-11282237747K8xB.jpg"),
-//        Gnome("name2", "https://i.imgur.com/tGbaZCY.jpg"),
-//        Gnome("name2", "https://imgur.com/a/48DpmEb"),
-//        Gnome("name2", "https://i.imgur.com/DvpvklR.png"),
-//        Gnome("white-hem","https://www.publicdomainpictures.net/pictures/120000/nahled/white-hen.jpg"),
-//        Gnome("white-hen https","https://www.publicdomainpictures.net/pictures/120000/nahled/white-hen.jpg"),
-//        Gnome("name2", "https://i.imgur.com/DvpvklR.png"),
-//        Gnome("name2", "https://www.publicdomainpictures.net/pictures/10000/nahled/1-1275919724d1Oh.jpg"),
-//        Gnome("name2", "https://i.imgur.com/DvpvklR.png")
-//    )
+
+    val listOfImages = arrayOf(
+        "https://lumiere-a.akamaihd.net/v1/images/uk_toystory_chi_woody_n_5b5a006f.png?region=0,0,300,300",
+        "https://lumiere-a.akamaihd.net/v1/images/open-uri20150422-20810-10n7ovy_9b42e613.jpeg",
+        "http://i.imgur.com/DvpvklR.png",
+        "http://goo.gl/gEgYUd",
+        "https://style.pk/wp-content/uploads/2015/07/omer-Shahzad-performed-umrah-600x548.jpg",
+        "http://developer.android.com/images/activity_lifecycle.png"
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +38,32 @@ class MainActivity : AppCompatActivity() {
         getUsers()
         initRecycler()
         println("listOfBrastlewark " +listOfBrastlewark)
+
+
+
+
+
+
+
+        svBrastlewark.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val adapter = GnomeAdapter(listOfBrastlewark.toList());
+                adapter.filter.filter(newText)
+                rvSuperHero.adapter=adapter
+                return false
+            }
+
+        })
+
+
+
+
+
+
     }
 
     override fun onResume() {
@@ -91,20 +119,11 @@ class MainActivity : AppCompatActivity() {
                     )
                     if (oneBrastlewarkFromListOfArrayToJson.age in 150..220) {
                         oneBrastlewarkFromListOfArrayToJson.thumbnail =
-                            "http://i.imgur.com/DvpvklR.png";
+                                //                   "http://i.imgur.com/DvpvklR.png";
+                            listOfImages[Random.nextInt(0, listOfImages.size - 1)]
                         listOfBrastlewark.add(oneBrastlewarkFromListOfArrayToJson)
                     }
                 }
-
-                println("mutableList.size + "+listOfBrastlewark.size);
-                println("First two items")
-                println("mutableList[0]")
-                println(listOfBrastlewark.get(0))
-                println("mutableList[1]")
-                println(listOfBrastlewark.get(1))
-                println("mutableList[2]")
-                println(listOfBrastlewark.get(2))
-
             },
             { print("Can't download")})
         queue.add(stringReq)
@@ -113,3 +132,5 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+
+

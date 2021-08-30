@@ -13,6 +13,7 @@
         android:layout_height="50dp"
         android:textSize="35dp"
         android:text="TextView"
+        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@+id/ivThumbnail"
         tools:layout_editor_absoluteX="-53dp" />
 
